@@ -66,6 +66,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
+// Incremental Static Regeneration (ISR):
+// fallback false -> erro 404 ao tentar acessar um episodio
+// fallback true -> carrega os dados do episódio somento quando o usuário acessar o ep. É o cliente que processa essa requisição
+// fallback blocking -> carrega os dados do episódio na camada do next.js (node.js). Usuário só vai ser navegado para a tela quando os dados já estiverem carregados. Melhor opção para otimizar SEO
+// To remember -> aplicação next consiste: client(browser), server intermediário next.js (node.js) e server (back-end)
+
 export const getStaticProps: GetStaticProps = async (ctx) => {
     const { slug } = ctx.params
     const { data } = await api.get(`/episodes/${slug}`)
